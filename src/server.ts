@@ -26,7 +26,7 @@ app.use('/getCollection', (req: Request, res: Response): void => {
     console.log("About to get data");
     const mongoDB = DBConnection.getConn();
     mongoDB.getCollectionData().then(data => {
-      res.send("Got collection data: " + data);
+      res.send(data);
     });
 });
 

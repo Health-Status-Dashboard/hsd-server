@@ -60,7 +60,7 @@ export default class DBConnection {
         console.log(document._id);
         console.log(document['title']);
         console.log(document['content']);
-        return document['title'];
+        return JSON.stringify(document);
       });
   }
 
