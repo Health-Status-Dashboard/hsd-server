@@ -18,19 +18,26 @@ app.use('/init', (req: Request, res: Response): void => {
   const mongoDB = DBConnection.getConn();
   mongoDB.initializeCollections().then((result) => {
     console.log(result);
-    res.send("Reinitialized Datbase");
+    res.send("Reinitialized Database");
   });
 });
 
-/**
- * This sets up the `/` endpoint to accept requests. On request, it will get one document from the collection.
- */
-app.use('/', (req: Request, res: Response): void => {
+app.use('/getCollection', (req: Request, res: Response): void => {
     console.log("About to get data");
     const mongoDB = DBConnection.getConn();
     mongoDB.getCollectionData().then(data => {
       res.send("Got collection data: " + data);
     });
+});
+
+app.use('/close', (req: Request, res: Response): void => {
+  const mongoDB = DBConnection.getConn();
+  mongoDB.closeDb();
+  res.send("Connection closed.");
+});
+
+app.use('/', (req: Request, res: Response): void => {
+  res.send("Server is running.");
 });
 
 app.listen(PORT, (): void => {
