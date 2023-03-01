@@ -1,10 +1,11 @@
 import { Db, MongoClient } from 'mongodb';
 var mongoUrl = "mongodb://localhost:27017/";
 import { Schema, model, connect } from 'mongoose';
+import mongoose from 'mongoose';
 
 /**
- * will move this to "models" and "routes" folder after a sanity check
- */
+* will move this to "models" and "routes" folder after a sanity check
+*/
 
 // Create an interface representing a document in MongoDB.
 interface IState {
@@ -21,20 +22,6 @@ const stateSchema = new Schema<IState>({
 // Create a Model.
 const State = model<IState>('State', stateSchema);
 
-run().catch(err => console.log(err));
-
-async function run() {
-  // Connect to MongoDB
-  await connect('mongodb://127.0.0.1:27017/test');
-
-  const state = new State({
-    name: 'Massachusetts',
-    abbreviation: 'MA'
-  });
-  await state.save();
-
-  console.log(state.abbreviation); // "MA"
-}
 
 
 
@@ -51,6 +38,8 @@ export default class DBConnection {
   private readonly dbName = /*process.env.DB_NAME ||*/ 'hsd';
   private readonly healthDataCollection = "HEALTH_DATA";
 
+
+
   /**
    * Connects to the mondoDB client.
    */
@@ -60,11 +49,31 @@ export default class DBConnection {
         const dbUrl = this.mongoUrl + "/" + this.dbName;
         console.info(`Connecting to ${dbUrl}`);
         this.client = await MongoClient.connect(dbUrl);
+        mongoose.connect(mongoUrl)
         return this.client;
       }
     } catch (error) {
       console.error(error);
     }
+  }
+
+  public async run() {
+    const state = new State({
+      name: 'Massachusetts',
+      abbreviation: 'MA'
+    });
+    await state.save();
+
+    console.log(state.abbreviation); // "MA"
+  }
+
+
+  public async getState() {
+    const db = this.client.db(this.dbName);
+    console.log("db name:" + db.databaseName);
+    return State.find({}).then((document) => {
+      return JSON.stringify(document);
+    });
   }
 
   public async initializeCollections() {

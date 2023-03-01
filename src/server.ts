@@ -9,6 +9,7 @@ const PORT: number = 3001;
 
 const mongoDB = DBConnection.getConn();
 mongoDB.connect();
+mongoDB.run().catch(err => console.log(err));
 
 /**
  * This sets up the `/init` endpoint to accept requests. On request, it will reinitialize the database.
@@ -23,11 +24,19 @@ app.use('/init', (req: Request, res: Response): void => {
 });
 
 app.use('/getCollection', (req: Request, res: Response): void => {
-    console.log("About to get data");
-    const mongoDB = DBConnection.getConn();
-    mongoDB.getCollectionData().then(data => {
-      res.send(data);
-    });
+  console.log("About to get data");
+  const mongoDB = DBConnection.getConn();
+  mongoDB.getCollectionData().then(data => {
+    res.send(data);
+  });
+});
+
+app.use('/run', (req: Request, res: Response): void => {
+  console.log("getting the full collection");
+  const mongoDB = DBConnection.getConn();
+  mongoDB.getState().then(data => {
+    res.send(data);
+  });
 });
 
 app.use('/close', (req: Request, res: Response): void => {
@@ -41,5 +50,5 @@ app.use('/', (req: Request, res: Response): void => {
 });
 
 app.listen(PORT, (): void => {
-    console.log('SERVER IS UP ON PORT:', PORT);
+  console.log('SERVER IS UP ON PORT:', PORT);
 });
