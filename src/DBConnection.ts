@@ -10,13 +10,15 @@ import mongoose from 'mongoose';
 // Create an interface representing a document in MongoDB.
 interface IState {
   name: string;
-  abbreviation: string;
+  population: string;
+  code: string;
 }
 
 // Create a Schema corresponding to the document interface.
 const stateSchema = new Schema<IState>({
   name: { type: String, required: true },
-  abbreviation: { type: String, required: true },
+  population: { type: String, required: true },
+  code: { type: String, required: true }
 });
 
 // Create a Model.
@@ -57,7 +59,32 @@ export default class DBConnection {
     }
   }
 
-  public async run() {
+  public async initializeStates() {
+    // clear old data
+    await State.deleteMany({})
+    // get population by state
+    var life_span_api = "https://api.census.gov/data/2021/acs/acs1/profile?get=NAME,DP05_0001E&for=state:*";
+    var docs = await fetch(life_span_api).then(result => result.json());
+    // add state data to db
+    try {
+      for (var i = 0; i < docs.length; i++) {
+        console.log(docs[i])
+        const state = new State({
+          name: docs[i][0],
+          population: docs[i][1],
+          code: docs[i][2]
+        });
+        await state.save();
+      }
+      console.log("Added state documents");
+    } catch (err) {
+      console.log(err);
+      console.log(err.message);
+    }
+
+
+
+    /** 
     const state = new State({
       name: 'Massachusetts',
       abbreviation: 'MA'
@@ -65,10 +92,11 @@ export default class DBConnection {
     await state.save();
 
     console.log(state.abbreviation); // "MA"
+    */
   }
 
 
-  public async getState() {
+  public async getStates() {
     const db = this.client.db(this.dbName);
     console.log("db name:" + db.databaseName);
     return State.find({}).then((document) => {

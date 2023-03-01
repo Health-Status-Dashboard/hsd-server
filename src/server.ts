@@ -9,7 +9,7 @@ const PORT: number = 3001;
 
 const mongoDB = DBConnection.getConn();
 mongoDB.connect();
-mongoDB.run().catch(err => console.log(err));
+//mongoDB.run().catch(err => console.log(err));
 
 /**
  * This sets up the `/init` endpoint to accept requests. On request, it will reinitialize the database.
@@ -23,18 +23,26 @@ app.use('/init', (req: Request, res: Response): void => {
   });
 });
 
-app.use('/getCollection', (req: Request, res: Response): void => {
-  console.log("About to get data");
+app.use('/initStates', (req: Request, res: Response): void => {
+  console.log("getting the state collection");
   const mongoDB = DBConnection.getConn();
-  mongoDB.getCollectionData().then(data => {
+  mongoDB.initializeStates().then(data => {
     res.send(data);
   });
 });
 
-app.use('/run', (req: Request, res: Response): void => {
-  console.log("getting the full collection");
+app.use('/getStates', (req: Request, res: Response): void => {
+  console.log("getting the state collection");
   const mongoDB = DBConnection.getConn();
-  mongoDB.getState().then(data => {
+  mongoDB.getStates().then(data => {
+    res.send(data);
+  });
+});
+
+app.use('/getCollection', (req: Request, res: Response): void => {
+  console.log("About to get data");
+  const mongoDB = DBConnection.getConn();
+  mongoDB.getCollectionData().then(data => {
     res.send(data);
   });
 });
