@@ -1,9 +1,14 @@
 import express, { Application, Request, Response } from 'express';
 import DBConnection from './DBConnection';
 import cors from 'cors';
+import { stateRouter } from './routes/stateRoutes';
+
+export const routes = express.Router();
+routes.use(stateRouter);
 
 const app: Application = express();
 app.use(cors());
+app.use('/', routes);
 
 const PORT: number = 3001;
 
@@ -22,12 +27,13 @@ app.use('/init', (req: Request, res: Response): void => {
   });
 });
 
+
 app.use('/getCollection', (req: Request, res: Response): void => {
-    console.log("About to get data");
-    const mongoDB = DBConnection.getConn();
-    mongoDB.getCollectionData().then(data => {
-      res.send(data);
-    });
+  console.log("About to get data");
+  const mongoDB = DBConnection.getConn();
+  mongoDB.getCollectionData().then(data => {
+    res.send(data);
+  });
 });
 
 app.use('/close', (req: Request, res: Response): void => {
@@ -41,5 +47,7 @@ app.use('/', (req: Request, res: Response): void => {
 });
 
 app.listen(PORT, (): void => {
-    console.log('SERVER IS UP ON PORT:', PORT);
+  console.log('SERVER IS UP ON PORT:', PORT);
 });
+
+export default app;
