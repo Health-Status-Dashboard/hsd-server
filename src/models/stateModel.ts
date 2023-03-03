@@ -50,7 +50,6 @@ async function initializeStates() {
   var life_span_api = "https://api.census.gov/data/2021/acs/acs1/profile?get=NAME,DP05_0001E&for=state:*";
   var docs = await fetch(life_span_api).then(result => result.json());
   // add state data to db
-  console.log(docs);
   try {
     for (var i = 0; i < docs.length; i++) {
       console.log(docs[i])
