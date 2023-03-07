@@ -18,7 +18,7 @@ mongoDB.connect();
 /**
  * This sets up the `/init` endpoint to accept requests. On request, it will reinitialize the database.
  */
-app.use('/init', (req: Request, res: Response): void => {
+app.use('/api/init', (req: Request, res: Response): void => {
   console.log("Reinitializing DB");
   const mongoDB = DBConnection.getConn();
   mongoDB.initializeCollections().then((result) => {
@@ -28,7 +28,7 @@ app.use('/init', (req: Request, res: Response): void => {
 });
 
 
-app.use('/getCollection', (req: Request, res: Response): void => {
+app.use('/api/getCollection', (req: Request, res: Response): void => {
   console.log("About to get data");
   const mongoDB = DBConnection.getConn();
   mongoDB.getCollectionData().then(data => {
@@ -36,7 +36,7 @@ app.use('/getCollection', (req: Request, res: Response): void => {
   });
 });
 
-app.use('/close', (req: Request, res: Response): void => {
+app.use('/api/close', (req: Request, res: Response): void => {
   const mongoDB = DBConnection.getConn();
   mongoDB.closeDb();
   res.send("Connection closed.");
@@ -47,7 +47,7 @@ app.use('/', (req: Request, res: Response): void => {
 });
 
 app.listen(PORT, (): void => {
-  console.log('SERVER IS UP ON PORT:', PORT);
+  console.log('SERVER IS RUNNING ON PORT:', PORT);
 });
 
 export default app;
