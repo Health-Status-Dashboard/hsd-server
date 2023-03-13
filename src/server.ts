@@ -7,7 +7,7 @@ export const routes = express.Router();
 routes.use(stateRouter);
 
 const app: Application = express();
-// app.use(cors());
+app.use(cors());
 app.use('/', routes);
 
 const PORT: number = 3001;
