@@ -30,6 +30,13 @@ app.use('/api/init', (req: Request, res: Response): void => {
 
 
 app.use('/api/getCollection', (req: Request, res: Response): void => {
+  
+  //first reinit the db to have correct data
+  console.log("Reinitializing DB");
+  const mongoDB1 = DBConnection.getConn();
+  mongoDB1.initializeCollections().then((result) => {
+    console.log(result);
+
   console.log("About to get data");
   const mongoDB = DBConnection.getConn();
   mongoDB.getCollectionData().then(data => {
