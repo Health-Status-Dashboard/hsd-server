@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import DBConnection from './DBConnection';
 import cors from 'cors';
 import { stateRouter } from './routes/stateRoutes';
+import {  getStates } from './models/stateModel';
 
 export const routes = express.Router();
 routes.use(stateRouter);
@@ -40,6 +41,12 @@ app.use('/api/close', (req: Request, res: Response): void => {
   const mongoDB = DBConnection.getConn();
   mongoDB.closeDb();
   res.send("Connection closed.");
+});
+app.use('/api/getStates', (req: Request, res: Response): void => {
+  console.log("getting the state collection");
+  getStates().then(data => {
+      res.send(data);
+  });
 });
 
 app.use('/', (req: Request, res: Response): void => {
