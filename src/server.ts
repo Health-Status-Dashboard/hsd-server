@@ -54,19 +54,19 @@ app.use('/api/close', (req: Request, res: Response): void => {
 });
 
 app.use('/api/getStates', (req: Request, res: Response): void => {
-  console.log("getting the state collection");
   getStates().then(data => {
     res.send(data);
+    console.log(data);
+    console.log("getting the state collection");
   });
 });
 
 app.use('/api/initStates', (req, res): void => {
-  console.log("A) reinitializing the state collection");
   initializeStates().then(data => {
     res.send(data);
     console.log(data);
+    console.log("reinitializing the state collection");
   });
-  console.log("B) reinitializing the state collection");
 });
 
 
