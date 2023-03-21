@@ -60,7 +60,7 @@ app.use('/api/getStates', (req: Request, res: Response): void => {
   });
 });
 
-stateRouter.use('/api/initStates', (req, res): void => {
+app.use('/api/initStates', (req, res): void => {
   console.log("A) reinitializing the state collection");
   initializeStates().then(data => {
     res.send(data);
