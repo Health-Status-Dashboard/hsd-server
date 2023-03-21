@@ -2,13 +2,13 @@ import express, { Application, Request, Response } from 'express';
 import DBConnection from './DBConnection';
 import cors from 'cors';
 import { stateRouter } from './routes/stateRoutes';
-import {  getStates } from './models/stateModel';
+import { getStates } from './models/stateModel';
 
 export const routes = express.Router();
 routes.use(stateRouter);
 
 const app: Application = express();
-app.use(cors());
+//app.use(cors());
 app.use('/', routes);
 
 const PORT: number = 3001;
@@ -45,7 +45,7 @@ app.use('/api/close', (req: Request, res: Response): void => {
 app.use('/api/getStates', (req: Request, res: Response): void => {
   console.log("getting the state collection");
   getStates().then(data => {
-      res.send(data);
+    res.send(data);
   });
 });
 
