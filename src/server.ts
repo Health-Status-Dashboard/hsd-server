@@ -34,6 +34,7 @@ app.use('/api/getCollection', (req: Request, res: Response): void => {
   const mongoDB = DBConnection.getConn();
   mongoDB.getCollectionData().then(data => {
     res.send(data);
+    console.log(data)
   });
 });
 
@@ -42,12 +43,13 @@ app.use('/api/close', (req: Request, res: Response): void => {
   mongoDB.closeDb();
   res.send("Connection closed.");
 });
-app.use('/api/getStates', (req: Request, res: Response): void => {
-  console.log("getting the state collection");
-  getStates().then(data => {
-    res.send(data);
-  });
-});
+
+// app.use('/api/getStates', (req: Request, res: Response): void => {
+//   console.log("getting the state collection");
+//   getStates().then(data => {
+//     res.send(data);
+//   });
+// });
 
 app.use('/', (req: Request, res: Response): void => {
   res.send("Server is running.");
