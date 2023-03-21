@@ -19,14 +19,7 @@ stateRouter.use('/api/getAllStates', (req, res): void => {
     });
 });
 
-stateRouter.use('/api/initStates', (req, res): void => {
-    console.log("A) reinitializing the state collection");
-    initializeStates().then(data => {
-        res.send(data);
-        console.log(data);
-    });
-    console.log("B) reinitializing the state collection");
-});
+
 
 
 

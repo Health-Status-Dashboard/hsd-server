@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import DBConnection from './DBConnection';
 import cors from 'cors';
 import { stateRouter } from './routes/stateRoutes';
-import { getStates } from './models/stateModel';
+import { getStates, initializeStates } from './models/stateModel';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
@@ -60,6 +60,14 @@ app.use('/api/getStates', (req: Request, res: Response): void => {
   });
 });
 
+stateRouter.use('/api/initStates', (req, res): void => {
+  console.log("A) reinitializing the state collection");
+  initializeStates().then(data => {
+    res.send(data);
+    console.log(data);
+  });
+  console.log("B) reinitializing the state collection");
+});
 
 
 
