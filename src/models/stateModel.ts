@@ -47,6 +47,7 @@ async function initializeStates() {
   // clear old data
   await stateModel.deleteMany({})
   // get population by state
+  console.log("here")
   var life_span_api = "https://api.census.gov/data/2021/acs/acs1/profile?get=NAME,DP05_0001E&for=state:*";
   var docs = await fetch(life_span_api).then(result => result.json());
   // add state data to db
