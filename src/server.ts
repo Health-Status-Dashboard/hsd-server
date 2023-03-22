@@ -14,13 +14,6 @@ app.use('/', routes);
 
 const PORT: number = 3001;
 
-// const url = 'mongodb://127.0.0.1:27017/hsd'
-
-// mongoose.connect(url)
-//   .then(result => app.listen(PORT, () => console.log(`app running on port ${PORT}`)))
-//   .catch(err => console.log(err))
-
-
 
 const mongoDB = DBConnection.getConn();
 mongoDB.connect();
@@ -52,23 +45,6 @@ app.use('/api/close', (req: Request, res: Response): void => {
   mongoDB.closeDb();
   res.send("Connection closed.");
 });
-
-app.use('/api/getStates', (req: Request, res: Response): void => {
-  getStates().then(data => {
-    res.send(data);
-    console.log(data);
-    console.log("getting the state collection");
-  });
-});
-
-app.use('/api/initStates', (req, res): void => {
-  initializeStates().then(data => {
-    res.send(data);
-    console.log(data);
-    console.log("reinitializing the state collection");
-  });
-});
-
 
 
 
