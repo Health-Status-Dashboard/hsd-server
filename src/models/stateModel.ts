@@ -54,7 +54,9 @@ async function initializeStates() {
   try {
     for (var i = 0; i < docs.length; i++) {
       console.log(docs[i])
-      const state = new stateModel({
+      console.log(docs[i][0])
+      console.log(docs[i][1])
+      var state = new stateModel({
         name: docs[i][0],
         population: docs[i][1],
         code: docs[i][2]
