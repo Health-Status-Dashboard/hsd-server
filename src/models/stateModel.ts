@@ -54,12 +54,12 @@ async function initializeStates() {
   try {
     for (var i = 0; i < docs.length; i++) {
       console.log(docs[i])
-      console.log(docs[i][0])
-      console.log(docs[i][1])
+      console.log(docs[i].name)
+      console.log(docs[i].population)
       var state = new stateModel({
-        name: docs[i][0],
-        population: docs[i][1],
-        code: docs[i][2]
+        name: docs[i].name,
+        population: docs[i].population,
+        code: docs[i].code
       });
       console.log(state)
       await state.save();
