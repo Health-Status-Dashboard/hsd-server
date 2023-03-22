@@ -39,7 +39,7 @@ const stateSchema = new Schema({
   code: { type: String, required: true }
 })
 
-const stateModel = mongoose.model("user", stateSchema);
+const stateModel = mongoose.model("state", stateSchema);
 
 
 
