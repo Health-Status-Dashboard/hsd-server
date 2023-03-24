@@ -2,11 +2,13 @@ import express, { Application, Request, Response } from 'express';
 import DBConnection from './DBConnection';
 import cors from 'cors';
 import { stateRouter } from './routes/stateRoutes';
+import { summaryRouter } from './routes/summaryRoutes';
 import { getStates, initializeStates } from './models/stateModel';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
 routes.use(stateRouter);
+routes.use(summaryRouter);
 
 const app: Application = express();
 app.use(cors());

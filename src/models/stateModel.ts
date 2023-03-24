@@ -36,8 +36,8 @@ export const stateSchema = new Schema<IState, State, IStateMethods>({
 
 const stateSchema = new Schema({
   name: { type: String, required: true },
-  population: { type: String, required: true },
-  code: { type: String, required: true }
+  population: { type: String },
+  code: { type: String }
 })
 
 const stateModel = mongoose.model("state", stateSchema);
