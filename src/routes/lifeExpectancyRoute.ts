@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { initializeLifeExpectancy, getLifeExpectancy } from '../models/lifeExpectancyModel';
+import { initializeLifeExpectancy, getLifeExpectancy, deleteLifeExpectancy } from '../models/lifeExpectancyModel';
 export const lifeExpectancyRouter = Router();
 
 lifeExpectancyRouter.use('/api/initLifeExpectancy', (req, res): void => {
@@ -15,4 +15,11 @@ lifeExpectancyRouter.use('/api/getLifeExpectancy', (req, res): void => {
         res.send(data);
         console.log(data);
     });
+});
+
+lifeExpectancyRouter.use('/api/deleteLifeExpectancy', (req, res): void => {
+    console.log("deleting the life expectancy data");
+    deleteLifeExpectancy().then(status => {
+        res.send(status)
+    })
 });
