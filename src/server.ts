@@ -11,7 +11,7 @@ routes.use(stateRouter);
 routes.use(lifeExpectancyRouter);
 
 const app: Application = express();
-app.use(cors());
+//app.use(cors());
 app.use('/', routes);
 
 const PORT: number = 3001;
