@@ -4,7 +4,7 @@ import cors from 'cors';
 import { stateRouter } from './routes/stateRoutes';
 import { lifeExpectancyRouter } from './routes/lifeExpectancyRoute';
 import { getStates, initializeStates } from './models/stateModel';
-import { infantMortalityRouter } from './routes/infantMortalityData';
+import { infantMortalityRouter } from './routes/infantMortalityRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
