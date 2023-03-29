@@ -36,17 +36,12 @@ async function initializeInfantMortality() {
       datasets: [
         {
           label: "infant mortality",
-          fill: false,
           data: infantMortalityRates,
-          borderColor: "rgb(204, 102, 255)",
-          tension: 0.1 
+          
       },
       {
         label: "neonatal mortality",
-        fill: false,
         data: neoNatMortalityRates,
-        borderColor: "rgb(0, 153, 255)",
-        tension: 0.1 
       },
       {
         label: "postneonatal mortality",
