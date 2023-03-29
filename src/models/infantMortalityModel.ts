@@ -6,6 +6,9 @@ import { LineDataSchema } from '../schemas/lineSchema';
 
 const infantMortalityModel = mongoose.model("infantMortality", LineDataSchema);
 
+/*
+Data for infant, neonatal, and postneonatal mortality rates found at: https://data.cdc.gov/NCHS/NCHS-VSRR-Quarterly-provisional-estimates-for-infa/jqwm-z2g9
+*/
 async function initializeInfantMortality() {
   await infantMortalityModel.deleteMany({})
   var infant_mortality_api = "https://data.cdc.gov/resource/jqwm-z2g9.json";
