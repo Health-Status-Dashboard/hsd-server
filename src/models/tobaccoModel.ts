@@ -14,11 +14,14 @@ async function initializeTobaccoModel() {
     var ListOfStats = [];
 
     for (var i = 0; i < docs.length; i++) {
+      var question = ["Current smoking among adults aged >= 18 years", "Current smokeless tobacco use among adults aged >= 18 years", "Quit attempts in the past year among current smokers"];
+      if ((docs[i].question === question[0] || docs[i].question === question[1] || docs[i].question === question[2]) && docs[i].datavaluetype ==="Crude Prevalence"){
         var stat = {
             value: docs[i].datavalue,
             label: docs[i].question
         };
         ListOfStats.push(stat);
+      }
     }
 
     var tobaccoData = new tobaccoModel({

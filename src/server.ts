@@ -8,6 +8,7 @@ import { infantMortalityRouter } from './routes/infantMortalityRoutes';
 import { alcoholRouter } from './routes/alcoholRoutes';
 import { tobaccoRouter } from './routes/tobaccoRoutes';
 import { NAWRouter } from './routes/nutritionActivityWeightRoutes';
+import { DCRouter } from './routes/deathCauseRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
@@ -17,6 +18,7 @@ routes.use(infantMortalityRouter);
 routes.use(alcoholRouter);
 routes.use(tobaccoRouter);
 routes.use(NAWRouter);
+routes.use(DCRouter);
 
 const app: Application = express();
 //app.use(cors());

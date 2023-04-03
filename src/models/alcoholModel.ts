@@ -1,4 +1,4 @@
-import { Model, Schema, model } from 'mongoose';
+
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { StatSchema } from '../schemas/statSchema';
@@ -16,13 +16,16 @@ async function initializeAlcoholModel() {
 
   try {
     var ListOfStats = [];
-
+    
     for (var i = 0; i < docs.length; i++) {
+      var question = ["Heavy drinking among adults aged >= 18 years", "Binge drinking prevalence among adults aged >= 18 years"]
+      if ((docs[i].question === question[0] || docs[i].question === question[1]) && docs[i].datavaluetype ==="Crude Prevalence"){
         var stat = {
             value: docs[i].datavalue,
             label: docs[i].question
         };
         ListOfStats.push(stat);
+      } 
     }
 
     var alcoholData = new alcoholModel({
