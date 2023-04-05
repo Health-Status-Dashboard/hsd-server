@@ -5,8 +5,7 @@ import { stateRouter } from './routes/stateRoutes';
 import { lifeExpectancyRouter } from './routes/lifeExpectancyRoute';
 import { getStates, initializeStates } from './models/stateModel';
 import { infantMortalityRouter } from './routes/infantMortalityRoutes';
-import { alcoholRouter } from './routes/alcoholRoutes';
-import { tobaccoRouter } from './routes/tobaccoRoutes';
+import { alcoholTobaccoRouter } from './routes/alcoholTobaccoRoutes';
 import { NAWRouter } from './routes/nutritionActivityWeightRoutes';
 import { DCRouter } from './routes/deathCauseRoutes';
 //import * as mongoose from 'mongoose'
@@ -15,8 +14,7 @@ export const routes = express.Router();
 routes.use(stateRouter);
 routes.use(lifeExpectancyRouter);
 routes.use(infantMortalityRouter);
-routes.use(alcoholRouter);
-routes.use(tobaccoRouter);
+routes.use(alcoholTobaccoRouter);
 routes.use(NAWRouter);
 routes.use(DCRouter);
 
