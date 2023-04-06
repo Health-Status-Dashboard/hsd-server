@@ -8,6 +8,9 @@ import { infantMortalityRouter } from './routes/infantMortalityRoutes';
 import { alcoholTobaccoRouter } from './routes/alcoholTobaccoRoutes';
 import { NAWRouter } from './routes/nutritionActivityWeightRoutes';
 import { DCRouter } from './routes/deathCauseRoutes';
+import { generalUSPopRouter } from './routes/summaryRoutes';
+import { cdSummaryRouter } from './routes/causeOfDeathSummaryRoutes';
+import { physicalHealthWeightRouter } from './routes/physicalHealthSummaryRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
@@ -17,6 +20,9 @@ routes.use(infantMortalityRouter);
 routes.use(alcoholTobaccoRouter);
 routes.use(NAWRouter);
 routes.use(DCRouter);
+routes.use(generalUSPopRouter);
+routes.use(cdSummaryRouter);
+routes.use(physicalHealthWeightRouter);
 
 const app: Application = express();
 //app.use(cors());
