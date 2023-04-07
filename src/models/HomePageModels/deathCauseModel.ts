@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
-import { LineDataSchema } from '../schemas/lineSchema';
+import { LineDataSchema } from '../../schemas/lineSchema';
 
 
 const dcModel = mongoose.model("deathCauses", LineDataSchema);

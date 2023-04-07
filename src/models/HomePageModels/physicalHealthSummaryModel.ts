@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
-import { SummarySchema } from '../schemas/summarySchema';
+import { SummarySchema } from '../../schemas/summarySchema';
 
 
 const physicalHealthWeightModel = mongoose.model("physical_health_weight_summary", SummarySchema);

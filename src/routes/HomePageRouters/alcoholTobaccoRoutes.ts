@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {initializeAlcoholTobaccoModel, getAlcoholTobaccoModel, deleteAlcoholTobaccoModel} from '../models/alcoholTobaccoModel';
+import {initializeAlcoholTobaccoModel, getAlcoholTobaccoModel, deleteAlcoholTobaccoModel} from '../../models/HomePageModels/alcoholTobaccoModel';
 export const alcoholTobaccoRouter = Router();
 
 alcoholTobaccoRouter.use('/api/initAlcoholTobaccoData', (req, res): void => {

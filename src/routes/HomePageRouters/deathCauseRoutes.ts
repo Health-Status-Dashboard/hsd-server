@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { initializeDCModel, getDCModel, deleteDCModel } from '../models/deathCauseModel';
+import { initializeDCModel, getDCModel, deleteDCModel } from '../../models/HomePageModels/deathCauseModel';
 export const DCRouter = Router();
 
 DCRouter.use('/api/initDCdata', (req, res): void => {

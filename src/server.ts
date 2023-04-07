@@ -5,12 +5,16 @@ import { stateRouter } from './routes/stateRoutes';
 import { lifeExpectancyRouter } from './routes/lifeExpectancyRoute';
 import { getStates, initializeStates } from './models/stateModel';
 import { infantMortalityRouter } from './routes/infantMortalityRoutes';
-import { alcoholTobaccoRouter } from './routes/alcoholTobaccoRoutes';
+import { alcoholTobaccoRouter } from './routes/HomePageRouters/alcoholTobaccoRoutes';
 import { NAWRouter } from './routes/nutritionActivityWeightRoutes';
 import { DCRouter } from './routes/deathCauseRoutes';
 import { generalUSPopRouter } from './routes/summaryRoutes';
 import { cdSummaryRouter } from './routes/causeOfDeathSummaryRoutes';
 import { physicalHealthWeightRouter } from './routes/physicalHealthSummaryRoutes';
+import { uninsuredUSPopRouter } from './routes/uninsuredSummaryRoutes';
+import { uninsuredByEducationRouter } from './routes/uninsuredByEducationRoutes';
+import { uninsuredByAgeRouter } from './routes/uninsuredByAgeEducationRoutes';
+import { uninsuredBySubgroupRouter } from './routes/uninsuredBySubgroupRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
@@ -23,6 +27,10 @@ routes.use(DCRouter);
 routes.use(generalUSPopRouter);
 routes.use(cdSummaryRouter);
 routes.use(physicalHealthWeightRouter);
+routes.use(uninsuredUSPopRouter);
+routes.use(uninsuredByEducationRouter);
+routes.use(uninsuredByAgeRouter);
+routes.use(uninsuredBySubgroupRouter);
 
 const app: Application = express();
 //app.use(cors());

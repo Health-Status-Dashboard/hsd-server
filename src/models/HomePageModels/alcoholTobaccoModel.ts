@@ -1,7 +1,7 @@
 
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
-import { StatSchema } from '../schemas/statSchema';
+import { StatSchema } from '../../schemas/statSchema';
 
 
 const alcoholTobaccoModel = mongoose.model("alcohol_tobacco", StatSchema);

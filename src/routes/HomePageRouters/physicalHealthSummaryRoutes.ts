@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { initializePhysicalHealthWeightModel, getPhysicalHealthWeightModel, deletePhysicalHealthWeightModel } from '../models/physicalHealthSummaryModel';
+import { initializePhysicalHealthWeightModel, getPhysicalHealthWeightModel, deletePhysicalHealthWeightModel } from '../../models/HomePageModels/physicalHealthSummaryModel';
 export const physicalHealthWeightRouter = Router();
 
 physicalHealthWeightRouter.use('/api/initWeight', (req, res): void => {

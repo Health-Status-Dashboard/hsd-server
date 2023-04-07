@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { initializeGeneralUSPopModel, getGeneralUSPopModel, deleteGeneralUSPopModel } from '../models/summaryModel';
+import { initializeGeneralUSPopModel, getGeneralUSPopModel, deleteGeneralUSPopModel } from '../../models/HomePageModels/summaryModel';
 export const generalUSPopRouter = Router();
 
 generalUSPopRouter.use('/api/initUSPop', (req, res): void => {

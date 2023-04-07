@@ -1,7 +1,7 @@
 import { Model, Schema, model } from 'mongoose';
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
-import { LineDataSchema } from '../schemas/lineSchema';
+import { LineDataSchema } from '../../schemas/lineSchema';
 
 
 const infantMortalityModel = mongoose.model("infantMortality", LineDataSchema);

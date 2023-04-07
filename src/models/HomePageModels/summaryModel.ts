@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
-import { SummarySchema } from '../schemas/summarySchema';
+import { SummarySchema } from '../../schemas/summarySchema';
 
 
 const generalUSPopModel = mongoose.model("general_us_population_summary", SummarySchema);

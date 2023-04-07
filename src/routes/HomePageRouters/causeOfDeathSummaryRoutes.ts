@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { initializeCDSummaryModel, getCDSummaryModel, deleteCDSummaryModel } from '../models/causeOfDeathSummaryModel';
+import { initializeCDSummaryModel, getCDSummaryModel, deleteCDSummaryModel } from '../../models/HomePageModels/causeOfDeathSummaryModel';
 export const cdSummaryRouter = Router();
 
 cdSummaryRouter.use('/api/initCDSummary', (req, res): void => {
