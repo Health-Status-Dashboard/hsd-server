@@ -2,24 +2,39 @@ import express, { Application, Request, Response } from 'express';
 import DBConnection from './DBConnection';
 import cors from 'cors';
 import { stateRouter } from './routes/stateRoutes';
-import { lifeExpectancyRouter } from './routes/lifeExpectancyRoute';
+import { lifeExpectancyRouter } from './routes/HomePageRouters/lifeExpectancyRoute';
 import { getStates, initializeStates } from './models/stateModel';
-import { infantMortalityRouter } from './routes/infantMortalityRoutes';
-import { alcoholRouter } from './routes/alcoholRoutes';
-import { tobaccoRouter } from './routes/tobaccoRoutes';
-import { NAWRouter } from './routes/nutritionActivityWeightRoutes';
+import { infantMortalityRouter } from './routes/HomePageRouters/infantMortalityRoutes';
+import { alcoholTobaccoRouter } from './routes/HomePageRouters/alcoholTobaccoRoutes';
+import { NAWRouter } from './routes/HomePageRouters/nutritionActivityWeightRoutes';
+import { DCRouter } from './routes/HomePageRouters/deathCauseRoutes';
+import { generalUSPopRouter } from './routes/HomePageRouters/summaryRoutes';
+import { cdSummaryRouter } from './routes/HomePageRouters/causeOfDeathSummaryRoutes';
+import { physicalHealthWeightRouter } from './routes/HomePageRouters/physicalHealthSummaryRoutes';
+import { uninsuredUSPopRouter } from './routes/HomePageRouters/uninsuredSummaryRoutes';
+import { uninsuredByEducationRouter } from './routes/HomePageRouters/uninsuredByEducationRoutes';
+import { uninsuredByAgeRouter } from './routes/HomePageRouters/uninsuredByAgeEducationRoutes';
+import { uninsuredBySubgroupRouter } from './routes/HomePageRouters/uninsuredBySubgroupRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
 routes.use(stateRouter);
 routes.use(lifeExpectancyRouter);
 routes.use(infantMortalityRouter);
-routes.use(alcoholRouter);
-routes.use(tobaccoRouter);
+routes.use(alcoholTobaccoRouter);
 routes.use(NAWRouter);
+routes.use(DCRouter);
+routes.use(generalUSPopRouter);
+routes.use(cdSummaryRouter);
+routes.use(physicalHealthWeightRouter);
+routes.use(uninsuredUSPopRouter);
+routes.use(uninsuredByEducationRouter);
+routes.use(uninsuredByAgeRouter);
+routes.use(uninsuredBySubgroupRouter);
 
 const app: Application = express();
 //app.use(cors());
+
 app.use('/', routes);
 
 const PORT: number = 3001;

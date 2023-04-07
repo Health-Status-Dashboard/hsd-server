@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { initializeInfantMortality, getInfantMortality, deleteInfantMortality } from '../models/infantMortalityModel';
+import { initializeInfantMortality, getInfantMortality, deleteInfantMortality } from '../../models/HomePageModels/infantMortalityModel';
 export const infantMortalityRouter = Router();
 
 infantMortalityRouter.use('/api/initInfantMortality', (req, res): void => {

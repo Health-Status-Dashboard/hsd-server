@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { initializeNAWModel, getNAWModel, deleteNAWModel } from '../models/nutritionActivityWeightModel';
+import { initializeNAWModel, getNAWModel, deleteNAWModel } from '../../models/HomePageModels/nutritionActivityWeightModel';
 export const NAWRouter = Router();
 
 NAWRouter.use('/api/initNAWData', (req, res): void => {

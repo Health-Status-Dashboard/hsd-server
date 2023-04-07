@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
-import { ProportionalSchema } from '../schemas/proportionalSchema';
+import { ProportionalSchema } from '../../schemas/proportionalSchema';
 
 
 const nutritionActivityWeightModel = mongoose.model("nutritionActivityWeight", ProportionalSchema);
