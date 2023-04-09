@@ -13,7 +13,7 @@ cdSummaryRouter.use('/api/getCDSummary', (req, res): void => {
     console.log("getting the cd summary data");
     getCDSummaryModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

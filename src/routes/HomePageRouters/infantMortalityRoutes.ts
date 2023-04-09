@@ -13,7 +13,7 @@ infantMortalityRouter.use('/api/getInfantMortality', (req, res): void => {
     console.log("getting the infant mortality data");
     getInfantMortality().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

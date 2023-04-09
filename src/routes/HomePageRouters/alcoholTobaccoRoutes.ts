@@ -13,7 +13,7 @@ alcoholTobaccoRouter.use('/api/getAlcoholTobaccoData', (req, res): void => {
     console.log("getting the alcohol/tobacco data");
     getAlcoholTobaccoModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

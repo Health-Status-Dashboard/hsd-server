@@ -13,7 +13,7 @@ uninsuredUSPopRouter.use('/api/getUninsuredUSPop', (req, res): void => {
     console.log("getting the uninsured US population data");
     getUninsuredUSPopModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

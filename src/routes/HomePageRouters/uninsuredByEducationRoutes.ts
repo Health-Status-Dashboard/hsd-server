@@ -13,7 +13,7 @@ uninsuredByEducationRouter.use('/api/getUninsuredByEducation', (req, res): void 
     console.log("getting the uninsured US population by education data");
     getUninsuredByEducationModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

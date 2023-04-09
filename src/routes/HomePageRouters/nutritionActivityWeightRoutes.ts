@@ -13,7 +13,7 @@ NAWRouter.use('/api/getNAWData', (req, res): void => {
     console.log("getting the nutrition, activity, weight data");
     getNAWModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

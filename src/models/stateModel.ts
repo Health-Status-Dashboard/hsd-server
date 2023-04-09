@@ -59,7 +59,7 @@ async function initializeStates() {
         population: docs[i][1],
         code: docs[i][2]
       });
-      console.log(state)
+      //console.log(state)
       await state.save();
     }
   } catch (err) {

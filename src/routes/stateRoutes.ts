@@ -14,7 +14,7 @@ stateRouter.use('/api/getStates', (req, res): void => {
     console.log("getting the state collection");
     getStates().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

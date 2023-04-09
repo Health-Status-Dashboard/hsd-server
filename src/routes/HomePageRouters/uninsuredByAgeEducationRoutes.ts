@@ -13,7 +13,7 @@ uninsuredByAgeRouter.use('/api/getUninsuredByAge', (req, res): void => {
     console.log("getting the uninsured US population by age data");
     getUninsuredByAgeModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

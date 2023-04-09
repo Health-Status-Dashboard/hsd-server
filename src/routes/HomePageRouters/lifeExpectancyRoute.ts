@@ -13,7 +13,7 @@ lifeExpectancyRouter.use('/api/getLifeExpectancy', (req, res): void => {
     console.log("getting the life expectancy");
     getLifeExpectancy().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 
