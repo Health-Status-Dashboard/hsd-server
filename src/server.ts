@@ -17,6 +17,10 @@ import { uninsuredByAgeRouter } from './routes/HomePageRouters/uninsuredByAgeEdu
 import { uninsuredBySubgroupRouter } from './routes/HomePageRouters/uninsuredBySubgroupRoutes';
 import { recentYearDCRouter } from './routes/RegionsPageRouters/recent12MonthCausesDeathRoutes';
 import { recent3YearDCRouter } from './routes/RegionsPageRouters/recent3YearQuarterlyCauseDeathRoutes';
+import { BirthRateRouter } from './routes/HomePageRouters/birthRatesRoutes';
+import { BirthRateGestationalRouter } from './routes/HomePageRouters/birthRatesGestationalPeriods';
+import { Last12MonthBirthRateRouter } from './routes/HomePageRouters/fertilityLast12MonthsRoutes';
+import { maternalDeathRateRouter } from './routes/HomePageRouters/maternalDeathRateRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
@@ -35,6 +39,10 @@ routes.use(uninsuredByAgeRouter);
 routes.use(uninsuredBySubgroupRouter);
 routes.use(recentYearDCRouter);
 routes.use(recent3YearDCRouter);
+routes.use(BirthRateRouter);
+routes.use(BirthRateGestationalRouter)
+routes.use(Last12MonthBirthRateRouter)
+routes.use(maternalDeathRateRouter)
 
 const app: Application = express();
 //app.use(cors());
