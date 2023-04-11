@@ -17,6 +17,10 @@ async function initializeGestationalPeriodsModel() {
     var datasets = [];
 
     for (var i = 0; i < docs.length; i++){
+
+        // save only recent 3 quarters data
+        if (time_periods.length === 3 && datasets[2].data.length === 3) break;
+
         var position = datasets.findIndex(obj => obj.label === docs[i].indicator);
 
         if (position === -1){
