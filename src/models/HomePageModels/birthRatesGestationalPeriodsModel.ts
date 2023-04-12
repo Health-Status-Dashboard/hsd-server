@@ -12,42 +12,42 @@ async function initializeGestationalPeriodsModel() {
   var docs: any = await fetch(death_causes_api).then(result => result.json());
 
   try {
-    
-    var time_periods =[];
+
+    var time_periods = [];
     var datasets = [];
 
-    for (var i = 0; i < docs.length; i++){
+    for (var i = 0; i < docs.length; i++) {
 
-        // save only recent 3 quarters data
-        if (time_periods.length === 3 && datasets[2].data.length === 3) break;
+      // save only recent 3 quarters data
+      //if (time_periods.length === 3 && datasets[2].data.length === 3) break;
 
-        var position = datasets.findIndex(obj => obj.label === docs[i].indicator);
+      var position = datasets.findIndex(obj => obj.label === docs[i].indicator);
 
-        if (position === -1){
-            datasets.push({
-                label: docs[i].indicator,
-                data: [docs[i].rate],
-            })
-        }
+      if (position === -1) {
+        datasets.push({
+          label: docs[i].indicator,
+          data: [docs[i].rate],
+        })
+      }
 
-        if (position !== -1){
-            var dataList = datasets[position].data;
-            dataList.unshift(docs[i].rate)
-        }
+      if (position !== -1) {
+        var dataList = datasets[position].data;
+        dataList.unshift(docs[i].rate)
+      }
 
-        //put time period in list if not in list
-        if (time_periods[0] !== docs[i].year_and_quarter){
-            time_periods.unshift(docs[i].year_and_quarter);
-        }
+      //put time period in list if not in list
+      if (time_periods[0] !== docs[i].year_and_quarter) {
+        time_periods.unshift(docs[i].year_and_quarter);
+      }
     }
 
 
 
 
     var birthRateData = new gestationalPeriodsModel({
-        title: 'Birth Rates by Gestational Age (rate per 100 births)',
-        labels: time_periods,
-        datasets: datasets,
+      title: 'Birth Rates by Gestational Age (rate per 100 births)',
+      labels: time_periods,
+      datasets: datasets,
     })
 
     await birthRateData.save();
@@ -72,7 +72,7 @@ async function deleteGestationalPeriodsModel() {
 };
 
 export {
-    initializeGestationalPeriodsModel,
-    getGestationalPeriodsModel,
-    deleteGestationalPeriodsModel
+  initializeGestationalPeriodsModel,
+  getGestationalPeriodsModel,
+  deleteGestationalPeriodsModel
 };
