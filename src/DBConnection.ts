@@ -54,13 +54,13 @@ export default class DBConnection {
 
   public async getCollectionData(): Promise<string> {
     const db = this.client.db(this.dbName);
-    console.log("db name:" + db.databaseName);
+    //console.log("db name:" + db.databaseName);
     
     return db.collection(this.healthDataCollection).findOne({}).then((document) => {
-      console.log("document: " + document);
-      console.log(document._id);
-      console.log(document['title']);
-      console.log(document['content']);
+      // console.log("document: " + document);
+      // console.log(document._id);
+      // console.log(document['title']);
+      // console.log(document['content']);
       return JSON.stringify(document);
     });
   }

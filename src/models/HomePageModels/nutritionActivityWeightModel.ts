@@ -17,21 +17,21 @@ async function initializeNAWModel() {
 
     var obesityAndOverweight;
     var obesity;
-    var totalCount = 0; 
+    var totalCount = 0;
 
     for (var i = 0; i < docs.length; i++) {
-        if (docs[i].question === "Obesity among adults aged >= 18 years" && docs[i].datavaluetype ==="Crude Prevalence"){
-            ListOflabels.push("Obesity");
-            ListOfStats.push(docs[i].datavalue);
-            obesity = docs[i].datavalue;
-        }
-        if (docs[i].question === "Overweight or obesity among adults aged >= 18 years" && docs[i].datavaluetype ==="Crude Prevalence"){
-            obesityAndOverweight = docs[i].datavalue;
-        }
-        if (docs[i].question === "Healthy weight among adults aged >= 18 years" && docs[i].datavaluetype ==="Crude Prevalence"){
-            ListOflabels.push("Healthy");
-            ListOfStats.push(docs[i].datavalue);
-        }
+      if (docs[i].question === "Obesity among adults aged >= 18 years" && docs[i].datavaluetype === "Crude Prevalence") {
+        ListOflabels.push("Obese");
+        ListOfStats.push(docs[i].datavalue);
+        obesity = docs[i].datavalue;
+      }
+      if (docs[i].question === "Overweight or obesity among adults aged >= 18 years" && docs[i].datavaluetype === "Crude Prevalence") {
+        obesityAndOverweight = docs[i].datavalue;
+      }
+      if (docs[i].question === "Healthy weight among adults aged >= 18 years" && docs[i].datavaluetype === "Crude Prevalence") {
+        ListOflabels.push("Healthy");
+        ListOfStats.push(docs[i].datavalue);
+      }
     }
 
     //find overweight alone
@@ -39,23 +39,23 @@ async function initializeNAWModel() {
     ListOfStats.push(((+obesityAndOverweight) - (+obesity)).toFixed(2).toString());
 
     //find underweight/other stats
-    var totalCount = 0; 
-    for (var j = 0; j < ListOfStats.length; j++){
-        var x = +(ListOfStats[j]);
-        totalCount+=x;
+    var totalCount = 0;
+    for (var j = 0; j < ListOfStats.length; j++) {
+      var x = +(ListOfStats[j]);
+      totalCount += x;
     }
 
-    var underweightOrOther = (100- totalCount).toFixed(2).toString();
+    var underweightOrOther = (100 - totalCount).toFixed(2).toString();
     ListOflabels.push("Underweight/Other");
     ListOfStats.push(underweightOrOther);
 
     var NAWData = new nutritionActivityWeightModel({
-        title: "US Chronic Data of Nutrition, Activity, and Weight - Statistic Percentages in 2021",
-        labels: ListOflabels,
-            datasets: [{
-                label: 'Percentage of Population',
-                data: ListOfStats,
-            }]
+      title: "US Nutrition, Activity, and Weight - 2021",
+      labels: ListOflabels,
+      datasets: [{
+        label: 'Percentage of Population',
+        data: ListOfStats,
+      }]
     })
     await NAWData.save();
 
@@ -78,7 +78,7 @@ async function deleteNAWModel() {
 };
 
 export {
-    initializeNAWModel,
-    getNAWModel,
-    deleteNAWModel
+  initializeNAWModel,
+  getNAWModel,
+  deleteNAWModel
 };

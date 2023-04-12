@@ -13,7 +13,7 @@ DCRouter.use('/api/getDCdata', (req, res): void => {
     console.log("getting the DC data");
     getDCModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

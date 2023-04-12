@@ -13,7 +13,7 @@ uninsuredBySubgroupRouter.use('/api/getUninsuredBySubgroup', (req, res): void =>
     console.log("getting the uninsured by subgroup data");
     getUninsuredBySubgroupModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

@@ -15,6 +15,12 @@ import { uninsuredUSPopRouter } from './routes/HomePageRouters/uninsuredSummaryR
 import { uninsuredByEducationRouter } from './routes/HomePageRouters/uninsuredByEducationRoutes';
 import { uninsuredByAgeRouter } from './routes/HomePageRouters/uninsuredByAgeEducationRoutes';
 import { uninsuredBySubgroupRouter } from './routes/HomePageRouters/uninsuredBySubgroupRoutes';
+import { recentYearDCRouter } from './routes/RegionsPageRouters/recent12MonthCausesDeathRoutes';
+import { recent3YearDCRouter } from './routes/RegionsPageRouters/recent3YearQuarterlyCauseDeathRoutes';
+import { BirthRateRouter } from './routes/HomePageRouters/birthRatesRoutes';
+import { BirthRateGestationalRouter } from './routes/HomePageRouters/birthRatesGestationalPeriods';
+import { Last12MonthBirthRateRouter } from './routes/HomePageRouters/fertilityLast12MonthsRoutes';
+import { maternalDeathRateRouter } from './routes/HomePageRouters/maternalDeathRateRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
@@ -31,6 +37,12 @@ routes.use(uninsuredUSPopRouter);
 routes.use(uninsuredByEducationRouter);
 routes.use(uninsuredByAgeRouter);
 routes.use(uninsuredBySubgroupRouter);
+routes.use(recentYearDCRouter);
+routes.use(recent3YearDCRouter);
+routes.use(BirthRateRouter);
+routes.use(BirthRateGestationalRouter)
+routes.use(Last12MonthBirthRateRouter)
+routes.use(maternalDeathRateRouter)
 
 const app: Application = express();
 //app.use(cors());
@@ -50,7 +62,7 @@ app.use('/api/init', (req: Request, res: Response): void => {
   console.log("Reinitializing DB");
   const mongoDB = DBConnection.getConn();
   mongoDB.initializeCollections().then((result) => {
-    console.log(result);
+    //console.log(result);
     res.send("Reinitialized Database");
   });
 });
@@ -61,7 +73,7 @@ app.use('/api/getCollection', (req: Request, res: Response): void => {
   const mongoDB = DBConnection.getConn();
   mongoDB.getCollectionData().then(data => {
     res.send(data);
-    console.log(data)
+    //console.log(data)
   });
 });
 

@@ -13,7 +13,7 @@ generalUSPopRouter.use('/api/getUSPop', (req, res): void => {
     console.log("getting the general US population data");
     getGeneralUSPopModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 
