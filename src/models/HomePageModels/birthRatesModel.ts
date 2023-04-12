@@ -10,36 +10,36 @@ async function initializeBirthRateModel() {
   var docs: any = await fetch(birth_rate_api).then(result => result.json());
 
   try {
-    
-    var time_periods =[];
+
+    var time_periods = [];
     var datasets = [];
 
-    for (var i = 0; i < docs.length; i++){
-        var position = datasets.findIndex(obj => obj.label === docs[i].indicator);
+    for (var i = 0; i < docs.length; i++) {
+      var position = datasets.findIndex(obj => obj.label === docs[i].indicator);
 
-        if (position === -1){
-            datasets.push({
-                label: docs[i].indicator,
-                data: [docs[i].rate],
-            })
-        }
+      if (position === -1) {
+        datasets.push({
+          label: docs[i].indicator,
+          data: [docs[i].rate],
+        })
+      }
 
-        if (position !== -1){
-            var dataList = datasets[position].data;
-            dataList.unshift(docs[i].rate)
-        }
+      if (position !== -1) {
+        var dataList = datasets[position].data;
+        dataList.unshift(docs[i].rate)
+      }
 
-        //put time period in list if not in list
-        if (time_periods[0] !== docs[i].year_and_quarter){
-            time_periods.unshift(docs[i].year_and_quarter);
-        }
+      //put time period in list if not in list
+      if (time_periods[0] !== docs[i].year_and_quarter) {
+        time_periods.unshift(docs[i].year_and_quarter);
+      }
     }
 
 
     var birthRateData = new birthRatesModel({
-        title: 'Birth Rates for Various Age-Groups',
-        labels: time_periods,
-        datasets: datasets,
+      title: 'Birth Rates by Age-Group (per 1,000 population)',
+      labels: time_periods,
+      datasets: datasets,
     })
 
     await birthRateData.save();
@@ -64,7 +64,7 @@ async function deleteBirthRateModel() {
 };
 
 export {
-    initializeBirthRateModel,
-    getBirthRateModel,
-    deleteBirthRateModel
+  initializeBirthRateModel,
+  getBirthRateModel,
+  deleteBirthRateModel
 };
