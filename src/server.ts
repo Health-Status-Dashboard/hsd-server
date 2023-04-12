@@ -56,17 +56,25 @@ const mongoDB = DBConnection.getConn();
 mongoDB.connect();
 
 /**
- * This sets up the `/init` endpoint to accept requests. On request, it will reinitialize the database.
+ * This sets up the `/reset` endpoint to accept requests. On request, it will reinitialize the database.
  */
-app.use('/api/init', (req: Request, res: Response): void => {
+app.use('/api/reset', (req: Request, res: Response): void => {
   console.log("Reinitializing DB");
-  const mongoDB = DBConnection.getConn();
-  mongoDB.initializeCollections().then((result) => {
-    //console.log(result);
+  //const mongoDB = DBConnection.getConn();
+  mongoDB.resetCollections().then(() => {
     res.send("Reinitialized Database");
   });
 });
 
+/* api/update */
+app.use('/api/update-all', (req: Request, res: Response): void => {
+  console.log("Loading data to DB");
+  //const mongoDB = DBConnection.getConn();
+  mongoDB.updateCollections().then((result) => {
+    console.log(result);
+    res.send(result.join("\r\n"));
+  });
+});
 
 app.use('/api/getCollection', (req: Request, res: Response): void => {
   console.log("About to get data");
@@ -82,10 +90,6 @@ app.use('/api/close', (req: Request, res: Response): void => {
   mongoDB.closeDb();
   res.send("Connection closed.");
 });
-
-
-
-
 
 app.use('/', (req: Request, res: Response): void => {
   res.send("Server is running.");
