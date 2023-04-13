@@ -6,6 +6,7 @@ export const recentYearDCRouter = Router();
 recentYearDCRouter.use('/api/initRecentYearDCModel', (req, res): void => {
     initializeRecentYearDCModel().then(data => {
         res.send(data);
+        console.log(data);
     });
 });
 
@@ -23,7 +24,7 @@ recentYearDCRouter.use('/api/deleteRecentYearDCModel', (req, res): void => {
 });
 
 
-//specific models returned for front end 
+//specific models returned for front end
 recentYearDCRouter.use('/api/getRecentYearDCModelAllCauses', (req, res): void => {
     getRecentYearDCModelAllCauses().then(data => {
         res.send(data);

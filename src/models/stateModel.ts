@@ -1,6 +1,8 @@
 import { Model, Schema, model } from 'mongoose';
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
+import util from 'util';
+import { Constants } from './constants';
 /*
 
 
@@ -41,7 +43,7 @@ const stateSchema = new Schema({
 })
 
 const stateModel = mongoose.model("state", stateSchema);
-
+const NAME = 'State'
 
 
 async function initializeStates() {
@@ -64,10 +66,10 @@ async function initializeStates() {
       });
       //console.log(state)
       await state.save();
-      message = "state collection updated"
+      message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
     }
   } catch (err) {
-    message = "state collection update failed. Error: " + err.message
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }

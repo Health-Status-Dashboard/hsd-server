@@ -1,18 +1,21 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { LongitudinalSchema } from '../../schemas/longitudinalSchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const uninsuredBySubgroupModel = mongoose.model("uninsured_subgroup_summary", LongitudinalSchema);
-
+const NAME = 'Uninsured By Subgroup';
 
 async function initializeUninsuredBySubgroupModel() {
   await uninsuredBySubgroupModel.deleteMany({})
   var uninsured_overall_api = "https://data.cdc.gov/resource/jb9g-gnvr.json?$where=`group`=%27National%20Estimate%27";
   var docs: any = await fetch(uninsured_overall_api).then(result => result.json());
-  
+
   var uninsured_subgroup_api = "https://data.cdc.gov/resource/jb9g-gnvr.json?$where=`group`=%27By%20Sex%27";
   var docs_s: any = await fetch(uninsured_subgroup_api).then(result => result.json());
+
+  var message;
 
   try {
 
@@ -50,7 +53,7 @@ async function initializeUninsuredBySubgroupModel() {
             break;
         }
     }
-   
+
 
     var ListOfStatsFemale = [];
     var ListOfStatsMale = [];
@@ -73,7 +76,7 @@ async function initializeUninsuredBySubgroupModel() {
                     };
                     ListofStatsOverall.push(stat);
                     break;
-                }   
+                }
             }
         }
     }
@@ -96,7 +99,7 @@ async function initializeUninsuredBySubgroupModel() {
                     break;
                 }
             }
-        }    
+        }
     }
 
     var popData = new uninsuredBySubgroupModel({
@@ -107,10 +110,14 @@ async function initializeUninsuredBySubgroupModel() {
 
     await popData.save();
 
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+
+  return message;
 };
 
 async function getUninsuredBySubgroupModel() {

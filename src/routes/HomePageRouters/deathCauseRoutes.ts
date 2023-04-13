@@ -5,7 +5,7 @@ export const DCRouter = Router();
 DCRouter.use('/api/initDCdata', (req, res): void => {
     initializeDCModel().then(data => {
         res.send(data);
-        console.log("reinitializing the DC data collection");
+        console.log(data);
     });
 });
 

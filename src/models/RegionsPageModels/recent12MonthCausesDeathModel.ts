@@ -1,14 +1,18 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { LineDataSchema } from '../../schemas/lineSchema';
+import util from 'util';
+import { Constants } from '../constants';
 
 const recentYearDCModel = mongoose.model("recent_year_death_causes", LineDataSchema);
+const NAME = 'Recent Year Death Cause';
 
 async function initializeRecentYearDCModel() {
   await recentYearDCModel.deleteMany({})
   var recent_year_dc_api = "https://data.cdc.gov/resource/489q-934x.json?year_and_quarter=2022%20Q3&rate_type=Crude&time_period=12%20months%20ending%20with%20quarter";
   var docs: any = await fetch(recent_year_dc_api).then(result => result.json());
-  
+  var message;
+
   try {
 
     var death_datasets = docs;
@@ -23,11 +27,14 @@ async function initializeRecentYearDCModel() {
     })
     await dataModel.save();
 
-
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+
+  return message;
 };
 
 
@@ -199,7 +206,7 @@ export {
     getRecentYearDCModelRespiratory,
     getRecentYearDCModelDiabetes,
     getRecentYearDCModelHeart,
-    getRecentYearDCModelHIV, 
+    getRecentYearDCModelHIV,
     getRecentYearDCModelHypertension,
     getRecentYearDCModelFluPneum,
     getRecentYearDCModelKidney,

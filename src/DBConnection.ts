@@ -14,6 +14,11 @@ import { initializeUninsuredByAgeModel } from './models/HomePageModels/uninsured
 import { initializeUninsuredByEducationModel } from './models/HomePageModels/uninsuredByEducationModel';
 import { initializeUninsuredBySubgroupModel } from './models/HomePageModels/uninsuredBySubgroupModel';
 import { initializeUninsuredUSPopModel } from './models/HomePageModels/uninsuredSummaryModel';
+import { initializeBirthRateModel } from './models/HomePageModels/birthRatesModel';
+import { initializeGestationalPeriodsModel } from './models/HomePageModels/birthRatesGestationalPeriodsModel';
+import { initializeBirthLast12MonthModel } from './models/HomePageModels/fertilityLast12MonthsModel';
+import { initializeRecent3YearDCModel } from './models/RegionsPageModels/recent3YearQuarterlyCausesDeathModel';
+import { initializeRecentYearDCModel } from './models/RegionsPageModels/recent12MonthCausesDeathModel';
 
 
 
@@ -56,21 +61,26 @@ export default class DBConnection {
   public async updateCollections(): Promise<string[]> {
     let message = [];
     return Promise.all([
-      initializeAlcoholTobaccoModel().then(() => { message.push("alcohol/tobacco data collection updated") }),
-      initializeCDSummaryModel().then(() => { message.push("cd summary data collection updated") }),
-      initializeDCModel().then(() => { message.push("DC data collection updated") }),
-      initializeInfantMortality().then(() => { message.push("infant mortality data collection updated") }),
-      initializeLifeExpectancy().then(() => { message.push("life expectancy collection updated") }),
-      initializeNAWModel().then(() => { message.push("nutrition, activity, weight data collection updated") }),
-      initializePhysicalHealthWeightModel().then(() => { message.push("weight data collection updated") }),
-      initializeGeneralUSPopModel().then(() => { message.push("general US population data collection updated") }),
-      initializeStates().then(result => { message.push(result) }),
-      initializeUninsuredByAgeModel().then(result => { message.push("uninsured US population by age data collection updated") }),
-      initializeUninsuredByEducationModel().then(result => { message.push("uninsured US population by education data collection updated") }),
-      initializeUninsuredBySubgroupModel().then(result => { message.push("uninsured US population by subgroup data collection updated") }),
-      initializeUninsuredUSPopModel().then(result => { message.push("uninsured US population data collection updated") })
-    ]).then(() => {
-      return message
+      initializeAlcoholTobaccoModel(),
+      initializeBirthLast12MonthModel(),
+      initializeBirthRateModel(),
+      initializeCDSummaryModel(),
+      initializeDCModel(),
+      initializeGeneralUSPopModel(),
+      initializeGestationalPeriodsModel(),
+      initializeInfantMortality(),
+      initializeLifeExpectancy(),
+      initializeNAWModel(),
+      initializePhysicalHealthWeightModel(),
+      initializeRecent3YearDCModel(),
+      initializeRecentYearDCModel(),
+      initializeStates(),
+      initializeUninsuredByAgeModel(),
+      initializeUninsuredByEducationModel(),
+      initializeUninsuredBySubgroupModel(),
+      initializeUninsuredUSPopModel()
+    ]).then((messages) => {
+      return messages
     });
   }
 

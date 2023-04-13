@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { StatSchema } from '../../schemas/statSchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const physicalHealthWeightModel = mongoose.model("physical_health_weight_summary", StatSchema);
-
+const NAME = 'Physical Health Weight';
 
 async function initializePhysicalHealthWeightModel() {
   await physicalHealthWeightModel.deleteMany({})
@@ -12,6 +13,7 @@ async function initializePhysicalHealthWeightModel() {
 
   var physical_health_weight_api = "https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco"; //TODO: CHANGE
   var docs: any = await fetch(physical_health_weight_api).then(result => result.json());
+  var message;
 
   try {
     var ListOfStats = [];
@@ -35,10 +37,14 @@ async function initializePhysicalHealthWeightModel() {
     })
     await weightData.save();
 
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+
+  return message;
 };
 
 async function getPhysicalHealthWeightModel() {

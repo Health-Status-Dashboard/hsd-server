@@ -1,14 +1,18 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { LineDataSchema } from '../../schemas/lineSchema';
+import util from 'util';
+import { Constants } from '../constants';
 
 const recent3YearDCModel = mongoose.model("recent_three_year_quarterly_death_causes", LineDataSchema);
+const NAME = 'Recent 3 Year Death Cause';
 
 async function initializeRecent3YearDCModel() {
   await recent3YearDCModel.deleteMany({})
   var recent_year_dc_api = "https://data.cdc.gov/resource/489q-934x.json?time_period=3-month%20period&rate_type=Crude";
   var docs: any = await fetch(recent_year_dc_api).then(result => result.json());
- 
+  var message;
+
   try {
 
     var datasets = [];
@@ -58,10 +62,15 @@ async function initializeRecent3YearDCModel() {
       datasets: datasets,
     })
     await dataModel.save();
+
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+
+  return message;
 };
 
 

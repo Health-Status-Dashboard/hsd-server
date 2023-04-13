@@ -1,16 +1,18 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { LineDataSchema } from '../../schemas/lineSchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const uninsuredByAgeModel = mongoose.model("uninsured_age_summary", LineDataSchema);
-
+const NAME = 'Uninsured By Age';
 
 async function initializeUninsuredByAgeModel() {
   await uninsuredByAgeModel.deleteMany({})
   var uninsured_age_api = "https://data.cdc.gov/resource/jb9g-gnvr.json?$where=`group`=%27By%20Age%27";
   var docs: any = await fetch(uninsured_age_api).then(result => result.json());
-  
+  var message;
+
   try {
     var ListOfStats = [];
 
@@ -29,7 +31,7 @@ async function initializeUninsuredByAgeModel() {
             break;
         }
     }
-   
+
     var popData = new uninsuredByAgeModel({
         title: "US Uninsured Rate by Age (% Uninsured)",
         labels:["Ages"],
@@ -39,10 +41,14 @@ async function initializeUninsuredByAgeModel() {
 
     await popData.save();
 
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+
+  return message;
 };
 
 async function getUninsuredByAgeModel() {

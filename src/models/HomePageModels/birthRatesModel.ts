@@ -1,13 +1,17 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { LongitudinalSchema } from '../../schemas/longitudinalSchema';
+import util from 'util';
+import { Constants } from '../constants';
 
 const birthRatesModel = mongoose.model("birthRates", LongitudinalSchema);
+const NAME = 'Birth Rate';
 
 async function initializeBirthRateModel() {
   await birthRatesModel.deleteMany({})
   var birth_rate_api = "https://data.cdc.gov/resource/76vv-a7x8.json?topic=Birth%20Rates&race_ethnicity=All%20races%20and%20origins&topic_subgroup=Age-specific%20Birth%20Rates";
   var docs: any = await fetch(birth_rate_api).then(result => result.json());
+  var message;
 
   try {
 
@@ -43,12 +47,15 @@ async function initializeBirthRateModel() {
     })
 
     await birthRateData.save();
-
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
 
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+
+  return message;
 };
 
 async function getBirthRateModel() {

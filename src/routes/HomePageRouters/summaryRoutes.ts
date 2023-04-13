@@ -5,7 +5,7 @@ export const generalUSPopRouter = Router();
 generalUSPopRouter.use('/api/initUSPop', (req, res): void => {
     initializeGeneralUSPopModel().then(data => {
         res.send(data);
-        console.log("reinitializing the general US population data collection");
+        console.log(data);
     });
 });
 

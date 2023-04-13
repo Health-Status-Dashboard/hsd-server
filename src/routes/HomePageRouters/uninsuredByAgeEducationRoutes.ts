@@ -5,7 +5,7 @@ export const uninsuredByAgeRouter = Router();
 uninsuredByAgeRouter.use('/api/initUninsuredByAge', (req, res): void => {
     initializeUninsuredByAgeModel().then(data => {
         res.send(data);
-        console.log("reinitializing the uninsured US population by age data collection");
+        console.log(data);
     });
 });
 

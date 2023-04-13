@@ -5,7 +5,7 @@ export const lifeExpectancyRouter = Router();
 lifeExpectancyRouter.use('/api/initLifeExpectancy', (req, res): void => {
     initializeLifeExpectancy().then(data => {
         res.send(data);
-        console.log("reinitializing the life expectancy collection");
+        console.log(data);
     });
 });
 
