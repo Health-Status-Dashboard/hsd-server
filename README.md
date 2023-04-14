@@ -13,7 +13,7 @@ Run `npm start` to run the server. It will run on localhost:3000.
 The models folder contains the [schemas](https://mongoosejs.com/docs/typescript/schemas.html), data models, and behaviors for different types of data. If need be, models can have [both](https://mongoosejs.com/docs/typescript/statics-and-methods.html) methods and statics. The [schemas](https://github.com/Health-Status-Dashboard/hsd-server/tree/main/src/schemas) used in the backend reflect how the data will be used the frontend to visualize the data, rather than having specific schemas for each type of data originally drawn from APIs. [Models](https://github.com/Health-Status-Dashboard/hsd-server/tree/main/src/models) are, however, specific to each data source, so data can be independently manipulated if need be. 
 
 ### Routes
-The routes are meant to be specific to data models to keep a maintainable codebase. Each model has associated functions that can be accessed via these routes to manipulate requisite data.
+The routes are meant to be specific to data models to keep a maintainable codebase. Each model has associated functions that can be accessed via these routes to manipulate requisite data. Each [routes](https://github.com/Health-Status-Dashboard/hsd-server/tree/main/src/routes) file has at minimum an init, delete, and get route.
 
 ### Data Sources
 
