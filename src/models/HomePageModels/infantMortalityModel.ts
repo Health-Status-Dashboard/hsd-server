@@ -2,9 +2,11 @@ import { Model, Schema, model } from 'mongoose';
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { LineDataSchema } from '../../schemas/lineSchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const infantMortalityModel = mongoose.model("infantMortality", LineDataSchema);
+const NAME = 'Infant Mortality';
 
 /*
 Data for infant, neonatal, and postneonatal mortality rates found at: https://data.cdc.gov/NCHS/NCHS-VSRR-Quarterly-provisional-estimates-for-infa/jqwm-z2g9
@@ -13,11 +15,12 @@ async function initializeInfantMortality() {
   await infantMortalityModel.deleteMany({})
   var infant_mortality_api = "https://data.cdc.gov/resource/jqwm-z2g9.json";
   var docs: any = await fetch(infant_mortality_api).then(result => result.json());
+  var message;
 
   try {
     var mortalityDates = [];
-    var infantMortalityRates = []; 
-    var neoNatMortalityRates = []; 
+    var infantMortalityRates = [];
+    var neoNatMortalityRates = [];
     var postNeoNatMortalityRates = [];
 
     for (var i = 0; i < docs.length; i++) {
@@ -40,7 +43,7 @@ async function initializeInfantMortality() {
         {
           label: "infant mortality",
           data: infantMortalityRates,
-          
+
       },
       {
         label: "neonatal mortality",
@@ -52,10 +55,13 @@ async function initializeInfantMortality() {
       }],
     });
     await IMData.save();
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+  return message;
 };
 
 async function getInfantMortality() {

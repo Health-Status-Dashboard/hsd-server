@@ -1,14 +1,17 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { ProportionalSchema } from '../../schemas/proportionalSchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const nutritionActivityWeightModel = mongoose.model("nutritionActivityWeight", ProportionalSchema);
+const NAME = 'Nutrition Activity Weight';
 
 async function initializeNAWModel() {
   await nutritionActivityWeightModel.deleteMany({})
   var nutrition_activity_weight_api = "https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Nutrition,%20Physical%20Activity,%20and%20Weight%20Status";
   var docs: any = await fetch(nutrition_activity_weight_api).then(result => result.json());
+  var message;
 
   try {
 
@@ -58,11 +61,13 @@ async function initializeNAWModel() {
       }]
     })
     await NAWData.save();
-
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+  return message;
 };
 
 async function getNAWModel() {

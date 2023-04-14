@@ -1,16 +1,18 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { SummarySchema } from '../../schemas/summarySchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const uninsuredUSPopModel = mongoose.model("uninsured_us_population_summary", SummarySchema);
-
+const NAME = 'Uninsured US Population'
 
 async function initializeUninsuredUSPopModel() {
   await uninsuredUSPopModel.deleteMany({})
   var uninsured_pop_api = "https://data.cdc.gov/resource/jb9g-gnvr.json?$where=`group`='National Estimate'";
   var docs: any = await fetch(uninsured_pop_api).then(result => result.json());
-  
+  var message;
+
   try {
     var ListOfStats = [];
 
@@ -25,17 +27,21 @@ async function initializeUninsuredUSPopModel() {
             break;
         }
     }
-    
+
     var popData = new uninsuredUSPopModel({
         title: "Uninsured Population in the US",
         headers: ListOfStats
     })
     await popData.save();
 
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+
+  return message;
 };
 
 async function getUninsuredUSPopModel() {

@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { SummarySchema } from '../../schemas/summarySchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const generalUSPopModel = mongoose.model("general_us_population_summary", SummarySchema);
+const NAME = 'General US Population'
 
 
 async function initializeGeneralUSPopModel() {
@@ -16,25 +18,27 @@ async function initializeGeneralUSPopModel() {
   var fertility_rate_api = "https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco";
   var docsTob: any = await fetch(fertility_rate_api).then(result => result.json());
 
+  var message;
+
   try {
     var ListOfStats = [];
-    
+
         var stat = {
             value: docs[docs.length-1][0],
             label: 'Population'
         };
         ListOfStats.push(stat);
-       
-    
 
-    
+
+
+
     //TODO: fertility rates
     var stat2 = {
         value: "1.75",
         label: 'Fertility Rate'
     };
     ListOfStats.push(stat2);
-      
+
 
     var popData = new generalUSPopModel({
         title: "United States Overview",
@@ -42,10 +46,14 @@ async function initializeGeneralUSPopModel() {
     })
     await popData.save();
 
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+
+  return message;
 };
 
 async function getGeneralUSPopModel() {

@@ -5,7 +5,7 @@ export const cdSummaryRouter = Router();
 cdSummaryRouter.use('/api/initCDSummary', (req, res): void => {
     initializeCDSummaryModel().then(data => {
         res.send(data);
-        console.log("reinitializing the cd summary data collection");
+        console.log(data);
     });
 });
 

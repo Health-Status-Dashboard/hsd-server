@@ -1,6 +1,8 @@
 import { Model, Schema, model } from 'mongoose';
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
+import util from 'util';
+import { Constants } from '../constants';
 
 const lifeExpectancySchema = new Schema({
   title: { type: String, required: true },
@@ -11,11 +13,14 @@ const lifeExpectancySchema = new Schema({
 })
 
 const lifeExpectancyModel = mongoose.model("lifeExpectancy", lifeExpectancySchema);
+const NAME = 'Life Expectancy';
 
 async function initializeLifeExpectancy() {
   await lifeExpectancyModel.deleteMany({})
   var life_expectancy_api = "https://data.cdc.gov/resource/w9j2-ggv5.json";
   var docs: any = await fetch(life_expectancy_api).then(result => result.json());
+  var message;
+
   try {
 
     var years = [];
@@ -36,10 +41,13 @@ async function initializeLifeExpectancy() {
 
     });
     await lifeExp.save();
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+  return message;
 };
 
 async function getLifeExpectancy() {

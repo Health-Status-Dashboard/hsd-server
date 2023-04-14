@@ -6,7 +6,7 @@ export const recent3YearDCRouter = Router();
 recent3YearDCRouter.use('/api/initRecent3YearDCModel', (req, res): void => {
     initializeRecent3YearDCModel().then(data => {
         res.send(data);
-        console.log("reinitializing the recent 12 month death causes collection");
+        console.log(data);
     });
 });
 

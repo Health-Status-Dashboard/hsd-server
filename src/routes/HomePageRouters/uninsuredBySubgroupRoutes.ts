@@ -5,7 +5,7 @@ export const uninsuredBySubgroupRouter = Router();
 uninsuredBySubgroupRouter.use('/api/initUninsuredBySubgroup', (req, res): void => {
     initializeUninsuredBySubgroupModel().then(data => {
         res.send(data);
-        console.log("reinitializing the uninsured by subgroup data collection");
+        console.log(data);
     });
 });
 

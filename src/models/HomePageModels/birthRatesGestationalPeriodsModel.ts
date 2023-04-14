@@ -1,15 +1,18 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { LineDataSchema } from '../../schemas/lineSchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const gestationalPeriodsModel = mongoose.model("birth_rate_gestational_periods", LineDataSchema);
 
+const NAME = 'Gestational Period';
 
 async function initializeGestationalPeriodsModel() {
   await gestationalPeriodsModel.deleteMany({})
   var death_causes_api = "https://data.cdc.gov/resource/76vv-a7x8.json?topic_subgroup=Term%20Birth%20Rates&race_ethnicity=All%20races%20and%20origins";
   var docs: any = await fetch(death_causes_api).then(result => result.json());
+  var message;
 
   try {
 
@@ -51,12 +54,14 @@ async function initializeGestationalPeriodsModel() {
     })
 
     await birthRateData.save();
-
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
 
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+  return message;
 };
 
 async function getGestationalPeriodsModel() {
