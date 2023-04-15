@@ -15,6 +15,11 @@ import { uninsuredUSPopRouter } from './routes/HomePageRouters/uninsuredSummaryR
 import { uninsuredByEducationRouter } from './routes/HomePageRouters/uninsuredByEducationRoutes';
 import { uninsuredByAgeRouter } from './routes/HomePageRouters/uninsuredByAgeEducationRoutes';
 import { uninsuredBySubgroupRouter } from './routes/HomePageRouters/uninsuredBySubgroupRoutes';
+import { gdpSpendingRouter } from './routes/HealthSystemsRouters/GDPHealthSpendingRoutes';
+import { PharmaSpendingRouter } from './routes/HealthSystemsRouters/percentPharmaceuticalSpendingRoutes';
+import { numberDoctorsRouter } from './routes/HealthSystemsRouters/numberDoctorsRoutes';
+import { numberGraduatesRouter } from './routes/HealthSystemsRouters/numGraduatesRoutes';
+import { numberProfessionalsRouter } from './routes/HealthSystemsRouters/allMedicalProfessionalsRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
@@ -31,6 +36,11 @@ routes.use(uninsuredUSPopRouter);
 routes.use(uninsuredByEducationRouter);
 routes.use(uninsuredByAgeRouter);
 routes.use(uninsuredBySubgroupRouter);
+routes.use(gdpSpendingRouter);
+routes.use(PharmaSpendingRouter);
+routes.use(numberDoctorsRouter);
+routes.use(numberGraduatesRouter);
+routes.use(numberProfessionalsRouter);
 
 const app: Application = express();
 //app.use(cors());
