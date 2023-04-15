@@ -5,7 +5,7 @@ export const NAWRouter = Router();
 NAWRouter.use('/api/initNAWData', (req, res): void => {
     initializeNAWModel().then(data => {
         res.send(data);
-        console.log("reinitializing the nutrition, activity, weight data collection");
+        console.log(data);
     });
 });
 
@@ -13,7 +13,7 @@ NAWRouter.use('/api/getNAWData', (req, res): void => {
     console.log("getting the nutrition, activity, weight data");
     getNAWModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

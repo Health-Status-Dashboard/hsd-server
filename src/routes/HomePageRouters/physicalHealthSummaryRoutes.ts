@@ -5,7 +5,7 @@ export const physicalHealthWeightRouter = Router();
 physicalHealthWeightRouter.use('/api/initWeight', (req, res): void => {
     initializePhysicalHealthWeightModel().then(data => {
         res.send(data);
-        console.log("reinitializing the weight data collection");
+        console.log(data);
     });
 });
 
@@ -13,7 +13,7 @@ physicalHealthWeightRouter.use('/api/getWeight', (req, res): void => {
     console.log("getting the weight data");
     getPhysicalHealthWeightModel().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

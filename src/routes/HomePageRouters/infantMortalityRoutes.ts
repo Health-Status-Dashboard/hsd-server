@@ -5,7 +5,7 @@ export const infantMortalityRouter = Router();
 infantMortalityRouter.use('/api/initInfantMortality', (req, res): void => {
     initializeInfantMortality().then(data => {
         res.send(data);
-        console.log("reinitializing the infant mortality data collection");
+        console.log(data);
     });
 });
 
@@ -13,7 +13,7 @@ infantMortalityRouter.use('/api/getInfantMortality', (req, res): void => {
     console.log("getting the infant mortality data");
     getInfantMortality().then(data => {
         res.send(data);
-        console.log(data);
+        //console.log(data);
     });
 });
 

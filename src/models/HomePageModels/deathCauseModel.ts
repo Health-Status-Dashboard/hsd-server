@@ -1,15 +1,17 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { LineDataSchema } from '../../schemas/lineSchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const dcModel = mongoose.model("deathCauses", LineDataSchema);
-
+const NAME = 'Death Cause'
 
 async function initializeDCModel() {
   await dcModel.deleteMany({})
   var death_causes_api = "https://data.cdc.gov/resource/9dzk-mvmi.json?year=2023";
   var docs: any = await fetch(death_causes_api).then(result => result.json());
+  var message;
 
   try {
     var ListOfDatasets = [];
@@ -17,12 +19,11 @@ async function initializeDCModel() {
     'Chronic Lower Respiratory Diseases', 'Other Respiratory Diseases', 'Nephritis', 'Abnormal/Other', 'Heart Disease',
     'Cerebrovascular Disease', 'COVID-19 Multiple Causes', 'COVID-19 Primary Cause'];
 
-    const diseaseNames = ['septicemia', "malignant_neoplasms", "diabetes_mellitus", "alzheimer_disease", 
-          "influenza_and_pneumonia", "chronic_lower_respiratory", "other_diseases_of_respiratory", 'nephritis_nephrotic_syndrome', 
+    const diseaseNames = ['septicemia', "malignant_neoplasms", "diabetes_mellitus", "alzheimer_disease",
+          "influenza_and_pneumonia", "chronic_lower_respiratory", "other_diseases_of_respiratory", 'nephritis_nephrotic_syndrome',
           "symptoms_signs_and_abnormal", "diseases_of_heart", "cerebrovascular_diseases", "covid_19_multiple_cause_of", "covid_19_underlying_cause"];
 
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];      
-
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     for (var i = 0; i < docs.length; i++) {
       var dateString = monthNames[(+docs[i].month)-1];
@@ -45,11 +46,13 @@ async function initializeDCModel() {
       datasets: ListOfDatasets
     })
     await DCData.save();
-
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+  return message;
 };
 
 async function getDCModel() {

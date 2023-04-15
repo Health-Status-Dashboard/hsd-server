@@ -20,6 +20,12 @@ import { PharmaSpendingRouter } from './routes/HealthSystemsRouters/percentPharm
 import { numberDoctorsRouter } from './routes/HealthSystemsRouters/numberDoctorsRoutes';
 import { numberGraduatesRouter } from './routes/HealthSystemsRouters/numGraduatesRoutes';
 import { numberProfessionalsRouter } from './routes/HealthSystemsRouters/allMedicalProfessionalsRoutes';
+import { recentYearDCRouter } from './routes/RegionsPageRouters/recent12MonthCausesDeathRoutes';
+import { recent3YearDCRouter } from './routes/RegionsPageRouters/recent3YearQuarterlyCauseDeathRoutes';
+import { BirthRateRouter } from './routes/HomePageRouters/birthRatesRoutes';
+import { BirthRateGestationalRouter } from './routes/HomePageRouters/birthRatesGestationalPeriods';
+import { Last12MonthBirthRateRouter } from './routes/HomePageRouters/fertilityLast12MonthsRoutes';
+import { maternalDeathRateRouter } from './routes/HomePageRouters/maternalDeathRateRoutes';
 //import * as mongoose from 'mongoose'
 
 export const routes = express.Router();
@@ -41,6 +47,12 @@ routes.use(PharmaSpendingRouter);
 routes.use(numberDoctorsRouter);
 routes.use(numberGraduatesRouter);
 routes.use(numberProfessionalsRouter);
+routes.use(recentYearDCRouter);
+routes.use(recent3YearDCRouter);
+routes.use(BirthRateRouter);
+routes.use(BirthRateGestationalRouter)
+routes.use(Last12MonthBirthRateRouter)
+routes.use(maternalDeathRateRouter)
 
 const app: Application = express();
 //app.use(cors());
@@ -54,24 +66,32 @@ const mongoDB = DBConnection.getConn();
 mongoDB.connect();
 
 /**
- * This sets up the `/init` endpoint to accept requests. On request, it will reinitialize the database.
+ * This sets up the `/reset` endpoint to accept requests. On request, it will reinitialize the database.
  */
-app.use('/api/init', (req: Request, res: Response): void => {
+app.use('/api/reset', (req: Request, res: Response): void => {
   console.log("Reinitializing DB");
-  const mongoDB = DBConnection.getConn();
-  mongoDB.initializeCollections().then((result) => {
-    console.log(result);
+  //const mongoDB = DBConnection.getConn();
+  mongoDB.resetCollections().then(() => {
     res.send("Reinitialized Database");
   });
 });
 
+/* api/update */
+app.use('/api/update-all', (req: Request, res: Response): void => {
+  console.log("Loading data to DB");
+  //const mongoDB = DBConnection.getConn();
+  mongoDB.updateCollections().then((result) => {
+    console.log(result);
+    res.send(result.join("\r\n"));
+  });
+});
 
 app.use('/api/getCollection', (req: Request, res: Response): void => {
   console.log("About to get data");
   const mongoDB = DBConnection.getConn();
   mongoDB.getCollectionData().then(data => {
     res.send(data);
-    console.log(data)
+    //console.log(data)
   });
 });
 
@@ -80,10 +100,6 @@ app.use('/api/close', (req: Request, res: Response): void => {
   mongoDB.closeDb();
   res.send("Connection closed.");
 });
-
-
-
-
 
 app.use('/', (req: Request, res: Response): void => {
   res.send("Server is running.");

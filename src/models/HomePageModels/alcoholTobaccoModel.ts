@@ -2,10 +2,11 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import { StatSchema } from '../../schemas/statSchema';
-
+import util from 'util';
+import { Constants } from '../constants';
 
 const alcoholTobaccoModel = mongoose.model("alcohol_tobacco", StatSchema);
-
+const NAME = 'Alcohol/Tobacco'
 
 async function initializeAlcoholTobaccoModel() {
   await alcoholTobaccoModel.deleteMany({})
@@ -15,22 +16,24 @@ async function initializeAlcoholTobaccoModel() {
   var tobacco_api = "https://chronicdata.cdc.gov/resource/g4ie-h725.json?locationabbr=US&yearend=2021&stratification1=Overall&topic=Tobacco";
   var docsTob: any = await fetch(tobacco_api).then(result => result.json());
 
+  var message;
+
   try {
     var ListOfStats = [];
-    
+
     for (var i = 0; i < docs.length; i++) {
       var question = ["Heavy drinking among adults aged >= 18 years", "Binge drinking prevalence among adults aged >= 18 years"]
       if ((docs[i].question === question[0] || docs[i].question === question[1]) && docs[i].datavaluetype ==="Crude Prevalence"){
-        
+
         var stat = {
             value: docs[i].datavalue + "%",
             label: docs[i].question
         };
         ListOfStats.push(stat);
-      } 
+      }
     }
 
-    
+
 
     for (var i = 0; i < docsTob.length; i++) {
       var question = ["Current smoking among adults aged >= 18 years", "Current smokeless tobacco use among adults aged >= 18 years", "Quit attempts in the past year among current smokers"];
@@ -48,11 +51,14 @@ async function initializeAlcoholTobaccoModel() {
         stats: ListOfStats
     })
     await alcoholData.save();
+    message = util.format(Constants.COLLECTION_UPDATE_SUCCESS_MESSAGE, NAME);
 
   } catch (err) {
+    message = util.format(Constants.COLLECTION_UPDATE_ERROR_MESSAGE, NAME, err.message);
     console.log(err);
     console.log(err.message);
   }
+  return message;
 };
 
 async function getAlcoholTobaccoModel() {
