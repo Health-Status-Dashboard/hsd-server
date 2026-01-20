@@ -1,6 +1,7 @@
 # Health Status Dashboard Backend
 This repo contains code for the Health Status Dashboard backend.
 
+## HSD Server Setup
 Run `npm start` to run the server. It will run on localhost:3000.
 
 ## This server connects with a MongoDB instance to get and serve data.
